@@ -1,1 +1,1 @@
-print("Morse")
+print("Morse Code")
