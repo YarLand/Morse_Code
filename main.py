@@ -1,5 +1,5 @@
-from morse_dict import MorseDict
+from morse_parser import MorseParser
 
-morse_dict = MorseDict()
+morse_parser = MorseParser()
 
-morse_dict.MorseInit()
+morse_parser.decode("hi lol")
