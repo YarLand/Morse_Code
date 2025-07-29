@@ -10,6 +10,6 @@ class MorseParser:
     def __init__(self):
         pass
 
-    def decode(self, message):
-        decoded = " ".join([morse_dict.m_dict[letter.lower()] for letter in message]).strip()
-        print(decoded)
+    def encode(self, message):
+        encoded = " ".join([morse_dict.m_dict[letter.lower()] for letter in message]).strip()
+        print(encoded)
