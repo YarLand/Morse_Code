@@ -9,7 +9,7 @@ def define_message():
 while True:
     menu_main_choice = input("Would you like to (E)ncode or (D)ecode Morse Code?\n"
                              "Please press the key relating to the first letter of the command.\n"
-                             "Additional: e(X)it, (V)iew supported characters\n")
+                             "Additional: e(X)it, (V)iew supported characters,(C)hange format\n")
 
     match menu_main_choice.upper():
         case "D":
@@ -18,6 +18,8 @@ while True:
             morse_parser.message_proof(morse_parser.encode,define_message())
         case "V":
             morse_parser.debug_show_dict()
+        case "C":
+            morse_parser.format_change()
         case "X":
             break
         case _:
