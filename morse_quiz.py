@@ -14,6 +14,7 @@ class MorseQuiz:
     def morse_quiz_run(self):
         score_max = len(list(self.m_quiz.items()))
         score_user = 0
+        dict_incorrect = {}
         for answer, question in random.sample(list(self.m_quiz.items()),score_max):
             player = input(f"Decode the following Morse Code:\n{question}\nenter (X) to exit\n")
             if player.lower() == answer:
@@ -23,10 +24,14 @@ class MorseQuiz:
                 break
             else:
                 print(f"Incorrect, It was: '{answer}'.")
+                dict_incorrect[answer] = question
             print(f"Current Score: {score_user}\n")
         print("Quiz Over!\n"
               f"You got {score_user} out of {score_max} correct!")
         if score_user == score_max:
             print("A perfect score! Good job!\n")
         elif score_user < score_max:
+            print("Here are the answers for the incorrect guesses:")
+            for answer, question in dict_incorrect.items():
+                print(f"- '{answer}' = '{question}'")
             print("Try aiming for a perfect score, Good luck!\n")
