@@ -9,10 +9,14 @@ def define_message():
     return message_text
 
 while True:
-    menu_main_choice = input("Would you like to (E)ncode or (D)ecode Morse Code?\n"
-                             "Please press the key relating to the first letter of the command.\n"
-                             "Additional: e(X)it, (V)iew supported characters,(C)hange format\n"
-                             "(Q)uiz\n")
+    menu_main_choice = input("Welcome to the Python Morse Code Project!\n"
+                             "Would you like to?: \n"
+                             "- (E)ncode\n"
+                             "- (D)ecode\n"
+                             "- (Q)uiz\n"
+                             "- (V)iew supported characters\n"
+                             "- (C)hange format\n"
+                             "- e(X)it")
 
     match menu_main_choice.upper():
         case "D":
