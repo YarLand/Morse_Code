@@ -61,6 +61,4 @@ class MorseParser:
 
 
     def debug_show_dict(self):
-        print(self.dot)
-        print(self.dash)
-        print(morse_dict.m_dict)
+        print("Dot: ",self.dot,"\nDash: ", self.dash,"\nSupported characters: ", self.m_dict,"\n")
