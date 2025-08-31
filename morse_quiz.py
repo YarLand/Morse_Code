@@ -8,14 +8,32 @@ morse_parser = MorseParser()
 class MorseQuiz:
 
     def __init__(self):
-        self.m_quiz = morse_dict.MorseInit("morse_quiz_debug.tsv")
+        ### Todo: Replace the "morse_quiz_debug.tsv" with "morse_quiz_easy.tsv"
+        self.level_dict = {'Easy': 'morse_quiz_debug.tsv',
+                           'Medium': 'morse_quiz_medium.tsv',
+                           'Hard': 'morse_quiz_hard.tsv',
+                           'Expert': 'morse_quiz_expert.tsv'}
 
 
     def morse_quiz_run(self):
-        score_max = len(list(self.m_quiz.items()))
+        while True:
+            print("Please select difficulty level:")
+            i = 1
+            for key in self.level_dict:
+                print(f"({i}) {key}")
+                i += 1
+            difficulty = input("\nType the number corresponding to the level:\n")
+            if difficulty.isnumeric():
+                difficulty = int(difficulty)
+                if difficulty >= 1 and difficulty <= len((self.level_dict)):
+                    break
+            print("Incorrect input, Please try again:")
+
+        m_quiz = morse_dict.MorseInit(list(self.level_dict.values())[difficulty-1])
+        score_max = len(m_quiz)
         score_user = 0
         dict_incorrect = {}
-        for answer, question in random.sample(list(self.m_quiz.items()),score_max):
+        for answer, question in random.sample(list(m_quiz.items()),score_max):
             player = input(f"Decode the following Morse Code:\n{question}\nenter (X) to exit\n")
             if player.lower() == answer:
                 print(f"Correct! It was: '{answer}'!")
