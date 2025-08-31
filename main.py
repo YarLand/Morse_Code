@@ -16,7 +16,8 @@ while True:
                              "- (Q)uiz\n"
                              "- (V)iew supported characters\n"
                              "- (C)hange format\n"
-                             "- e(X)it")
+                             "- e(X)it"
+                             "\n")
 
     match menu_main_choice.upper():
         case "D":
