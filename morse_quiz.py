@@ -34,11 +34,25 @@ class MorseQuiz:
         score_user = 0
         dict_incorrect = {}
         for answer, question in random.sample(list(m_quiz.items()),score_max):
-            player = input(f"Decode the following Morse Code:\n{question}\nenter (X) to exit\n")
-            if player.lower() == answer:
+            while True:
+                player = input(f"Decode the following Morse Code\n"
+                               f"(Letters, Numbers and Spaces only):\n"
+                               f"{question}\n"
+                               f"Enter (exit) to exit\n").lower()
+                error_chars = []
+                for char in player:
+                    if not (char.isalnum() or char.isspace()):
+                        error_chars.append(char)
+                if error_chars == []:
+                    break
+                else:
+                    print(f"The following character\s are invalid:\n"
+                          f"{set(error_chars)}\n"
+                          f"Try again.")
+            if player == answer:
                 print(f"Correct! It was: '{answer}'!")
                 score_user += 1
-            elif player.lower == "x":
+            elif player == "exit":
                 break
             else:
                 print(f"Incorrect, It was: '{answer}'.")
