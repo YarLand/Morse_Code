@@ -35,16 +35,24 @@ class MorseQuiz:
                               "(2) guess directly?\n")
             match quiz_style:
                 case "1":
-                    quiz_options(difficulty)
+                    quiz_options(self,difficulty)
                     break
                 case "2":
-                    quiz_guess(difficulty)
+                    quiz_guess(self,difficulty)
                     break
                 case _:
                     print("Invalid input, Try again.")
 
 def quiz_options(self,difficulty):
-    pass
+    m_quiz = morse_dict.MorseInit(list(self.level_dict.values())[difficulty - 1])
+    score_max = len(m_quiz)
+    score_user = 0
+    dict_incorrect = {}
+    for answer, question in random.sample(list(m_quiz.items()), score_max):
+        options_list = [answer]
+        for _ in range(3):
+            options_list.append(random.sample(list(m_quiz.items()), score_max)[0][0])
+        print(list(set(options_list)))
 
 
 def quiz_guess(self,difficulty):
