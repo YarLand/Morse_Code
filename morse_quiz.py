@@ -49,10 +49,13 @@ def quiz_options(self,difficulty):
     score_user = 0
     dict_incorrect = {}
     for answer, question in random.sample(list(m_quiz.items()), score_max):
-        options_list = [answer]
-        for _ in range(3):
-            options_list.append(random.sample(list(m_quiz.items()), score_max)[0][0])
+        options_list = []
+        for item in random.sample(list(m_quiz.items()),4):
+            options_list.append(item[0])
+        if not answer in options_list:
+            options_list[0] = answer
         print(list(set(options_list)))
+        print(answer,question)
 
 
 def quiz_guess(self,difficulty):
