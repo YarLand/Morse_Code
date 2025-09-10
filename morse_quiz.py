@@ -49,13 +49,41 @@ def quiz_options(self,difficulty):
     score_user = 0
     dict_incorrect = {}
     for answer, question in random.sample(list(m_quiz.items()), score_max):
-        options_list = []
-        for item in random.sample(list(m_quiz.items()),4):
-            options_list.append(item[0])
+        options_list = [item[0] for item in random.sample(list(m_quiz.items()),4)]
         if not answer in options_list:
             options_list[0] = answer
-        print(list(set(options_list)))
-        print(answer,question)
+        # print(list(set(options_list)))
+        while True:
+            print(question)
+            i = 1
+            for key in options_list:
+                print(f"({i}) {key}")
+                i += 1
+            user_guess = input("Please select an answer:\n")
+            if user_guess.isnumeric():
+                user_guess = int(user_guess)
+                if user_guess >= 1 and user_guess <= len((options_list)):
+                    if options_list[user_guess-1] == answer:
+                        print(f"Correct! It was: '{answer}'!")
+                        score_user += 1
+                    elif options_list[user_guess-1] == "exit":
+                        break
+                    else:
+                        print(f"Incorrect, It was: '{answer}'.")
+                        dict_incorrect[answer] = question
+                    print(f"Current Score: {score_user}\n")
+                    break
+            print("Incorrect input, Please try again:")
+    print("Quiz Over!\n"
+          f"You got {score_user} out of {score_max} correct!")
+    if score_user == score_max:
+        print("A perfect score! Good job!\n")
+    elif score_user < score_max:
+        print("Here are the answers for the incorrect guesses:")
+        for answer, question in dict_incorrect.items():
+            print(f"- '{answer}' = '{question}'")
+        print("Try aiming for a perfect score, Good luck!\n")
+
 
 
 def quiz_guess(self,difficulty):
