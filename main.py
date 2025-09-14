@@ -4,6 +4,11 @@ from morse_quiz import MorseQuiz
 morse_parser = MorseParser()
 morse_quiz = MorseQuiz()
 
+dot = "."
+dash = "-"
+
+morse_settings = [dot,dash]
+
 def define_message():
     message_text = input("Please enter the message:\n")
     return message_text
@@ -21,9 +26,13 @@ while True:
 
     match menu_main_choice.upper():
         case "D":
-            morse_parser.message_proof(morse_parser.decode,define_message())
+            morse_parser.message_proof(
+                morse_parser.decode,
+                define_message())
         case "E":
-            morse_parser.message_proof(morse_parser.encode,define_message())
+            morse_parser.message_proof(
+                morse_parser.encode,
+                define_message())
         case "V":
             morse_parser.debug_show_dict()
         case "C":
