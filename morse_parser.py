@@ -10,7 +10,7 @@ class MorseParser:
         self.dash = "-"
 
     def invalid_check(func):
-        def character_check(self, message):
+        def character_check(self, message, settings):
             # print(args)
             # message = args[0]
             invalid_chars = []
@@ -21,42 +21,24 @@ class MorseParser:
                 print(f"Message contains invalid character/s: {list(set(invalid_chars))}.\n"
                       f"Please remove the characters from the message")
             else:
-                func(self, message)
+                func(self, message,settings)
         return character_check
 
 
-    def message_proof(self, func, message):
-        return func(message.strip())
+    def message_proof(self, func, message, morse_settings):
+        return func(message.strip(), morse_settings)
 
     @invalid_check
-    def encode(self, message):
+    def encode(self, message,morse_settings):
         encoded = " ".join([self.m_dict[letter.lower()] for letter in message]).strip()
-        encoded = encoded.translate(str.maketrans(".-",f"{self.dot}{self.dash}"))
-        print(encoded)
+        encoded = encoded.translate(str.maketrans(".-",f"{morse_settings["dot"]}{morse_settings["dash"]}"))
+        print(f"Encoded message: {encoded}")
 
-    def decode(self, message):
+    def decode(self, message, morse_settings):
         flipped_dict = {value: key for key, value in self.m_dict.items()}
-        flipped_dict = {key.translate(str.maketrans(".-",f"{self.dot}{self.dash}")): value for key, value in flipped_dict.items()}
+        flipped_dict = {key.translate(str.maketrans(".-",f"{morse_settings["dot"]}{morse_settings["dash"]}")): value for key, value in flipped_dict.items()}
         decoded = "".join([flipped_dict[block] for block in message.split(" ")]).strip()
-        print(decoded)
-
-    def format_change(self):
-        characters = {"dot": ".", "dash": "-"}
-
-        for char, value in characters.items():
-            while True:
-                char_change = input(f"Please input the new {char} character: \n"
-                               f"(Default: '{value}', leave blank to cancel)\n")
-                if len(char_change) > 1:
-                    print("Expected only 1 character, Restarting...")
-                elif char_change == "":
-                    break
-                else:
-                    if char == "dot":
-                        self.dot = char_change
-                    if char == "dash":
-                        self.dash = char_change
-                    break
+        print(f"Decoded message: {decoded}")
 
 
 
