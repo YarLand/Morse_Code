@@ -1,5 +1,7 @@
 from morse_parser import MorseParser
 from morse_quiz import MorseQuiz
+import pickle
+import os
 
 morse_parser = MorseParser()
 morse_quiz = MorseQuiz()
@@ -9,6 +11,15 @@ default_characters = {"dot": ".",
 
 morse_settings = {"dot": default_characters["dot"],
                   "dash": default_characters["dash"]}
+
+if os.path.isfile("./data.pickle"):
+    # print("found")
+    with open('data.pickle', 'rb') as file:
+        morse_settings = pickle.load(file)
+else:
+    # print("not found")
+    with open('data.pickle', 'wb') as file_a:
+        pickle.dump(morse_settings, file_a)
 
 
 def format_change(default_characters):
@@ -28,6 +39,19 @@ def format_change(default_characters):
                 if char == "dash":
                     morse_settings["dash"] = char_change
                 break
+    while True:
+        input_save = input("Save changes for future use?\n"
+                           "(Y)es\n"
+                           "(N)o\n")
+        match input_save.upper():
+            case "Y":
+                # print("save")
+                with open('data.pickle', 'wb') as file_a:
+                    pickle.dump(morse_settings, file_a)
+                break
+            case "N":
+                break
+        print("Invalid input, please try again")
 
 def define_message():
     message_text = input("Please enter the message:\n")
