@@ -9,7 +9,8 @@ class MorseParser:
         self.dot = "."
         self.dash = "-"
 
-    def invalid_check(func):
+    def invalid_check(func,reverse):
+        # TODO: implement reverse check to know what errors to check.
         def character_check(self, message, settings):
             # print(args)
             # message = args[0]
