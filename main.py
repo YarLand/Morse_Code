@@ -54,6 +54,7 @@ def format_change(default_characters):
         print("Invalid input, please try again")
 
 def define_message():
+    print(f"Current writing format: {morse_settings}")
     message_text = input("Please enter the message:\n")
     return message_text
 
