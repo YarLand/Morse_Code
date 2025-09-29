@@ -4,6 +4,8 @@ morse_dict = MorseDict()
 
 class MorseParser:
 
+    # If the input is not valid for this selection,
+    # Then prompt the user to try again and restart the loop
     def __init__(self):
         self.m_dict = morse_dict.MorseInit("Data/morse_dict.tsv")
         self.dot = "."
@@ -29,9 +31,10 @@ class MorseParser:
             if reverse:
                 flipped_dict = {value: key for key, value in self.m_dict.items()}
                 flipped_dict = {
-                    key.translate(str.maketrans(".-",
-                                                f"{settings["dot"]}{settings["dash"]}")): value for
-                                                key, value in flipped_dict.items()}
+                    key.translate(
+                        str.maketrans(".-/",
+                                      f"{settings["dot"]}{settings["dash"]}{settings["slash"]}")):
+                                      value for key, value in flipped_dict.items()}
                 for block in message.split(" "):
                     if block not in flipped_dict:
                         invalid_chars.append(block)
@@ -51,25 +54,31 @@ class MorseParser:
     def encode(self, message,morse_settings):
         encoded = " ".join([self.m_dict[letter.lower()]
                             for letter in message]).strip()
-        encoded = encoded.translate(str.maketrans(
-            ".-",
-            f"{morse_settings["dot"]}{morse_settings["dash"]}"))
+        encoded = encoded.translate(
+                          str.maketrans(".-/",
+                          f"{morse_settings["dot"]}{morse_settings["dash"]}{morse_settings["slash"]}"))
         print(f"Encoded message: {encoded}")
 
     @invalid_check
     def decode(self, message, morse_settings):
-        flipped_dict = {value: key for
-                        key, value in self.m_dict.items()}
-        flipped_dict = {key.translate(str.maketrans(".-",
-                                                    f"{morse_settings["dot"]}{morse_settings["dash"]}")):
-                                                    value for key, value in flipped_dict.items()}
+        flipped_dict = {value: key for key, value in self.m_dict.items()}
+        flipped_dict = {key.translate(
+                            str.maketrans(".-/",
+                                          f"{morse_settings["dot"]}{morse_settings["dash"]}{morse_settings["slash"]}")):
+                                          value for key, value in flipped_dict.items()}
         decoded = "".join([flipped_dict[block] for
                            block in message.split(" ")]).strip()
         print(f"Decoded message: {decoded}")
 
 
 
-    def show_dict(self):
-        print("Dot: ",self.dot,"\n"
-              "Dash: ", self.dash,"\n"
-              "Supported characters: ",self.m_dict,"\n")
+    def show_dict(self,morse_settings):
+        print("Dot: ",morse_settings["dot"],"\n"
+              "Dash: ", morse_settings["dash"],"\n"
+              "Slash: ", morse_settings["slash"],"\n"
+              "Supported characters: ",
+              {key: value.translate(
+                          str.maketrans(".-/",
+                          f"{morse_settings["dot"]}{morse_settings["dash"]}{morse_settings["slash"]}"))
+              for key, value in self.m_dict.items()},
+              "\n")

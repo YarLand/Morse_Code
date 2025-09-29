@@ -47,8 +47,10 @@ def quiz_options(self,difficulty,morse_settings):
         if not answer in options_list:
             options_list[0] = answer
         while True:
-            question = question.translate(str.maketrans(".-",
-                                                        f"{morse_settings["dot"]}{morse_settings["dash"]}"))
+            question = question.translate(str.maketrans(".-/",
+                                                        f"{morse_settings["dot"]}"
+                                                        f"{morse_settings["dash"]}"
+                                                        f"{morse_settings["slash"]}"))
             print(question)
             i = 1
             for key in options_list:
@@ -80,8 +82,10 @@ def quiz_guess(self,difficulty,morse_settings):
             list(quiz_assist.m_quiz.items()),
             quiz_assist.score_max):
         while True:
-            question = question.translate(str.maketrans(".-",
-                                                        f"{morse_settings["dot"]}{morse_settings["dash"]}"))
+            question = question.translate(str.maketrans(".-/",
+                                          f"{morse_settings["dot"]}"
+                                          f"{morse_settings["dash"]}"
+                                          f"{morse_settings["slash"]}"))
             player = input(f"Decode the following Morse Code\n"
                            f"(Letters, Numbers and Spaces only):\n"
                            f"{question}\n"
