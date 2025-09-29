@@ -18,7 +18,7 @@ class MorseQuiz:
             difficulty = input("\nType the number corresponding to the level:\n")
             if difficulty.isnumeric():
                 difficulty = int(difficulty)
-                if difficulty >= 1 and difficulty <= len((self.level_dict)):
+                if 1 <= difficulty <= len(self.level_dict):
                     break
             print("Incorrect input, Please try again:")
 
@@ -38,12 +38,18 @@ class MorseQuiz:
 
 def quiz_options(self,difficulty,morse_settings):
     quiz_assist = MorseQuizAssist(difficulty,self.level_dict)
-    for answer, question in random.sample(list(quiz_assist.m_quiz.items()), quiz_assist.score_max):
-        options_list = [item[0] for item in random.sample(list(quiz_assist.m_quiz.items()),4)]
+    for answer, question in random.sample(
+            list(quiz_assist.m_quiz.items()),
+            quiz_assist.score_max):
+        options_list = [item[0] for item in random.sample(
+            list(quiz_assist.m_quiz.items()),
+            4)]
         if not answer in options_list:
             options_list[0] = answer
         while True:
-            question = question.translate(str.maketrans(".-", f"{morse_settings["dot"]}{morse_settings["dash"]}"))
+            question = question.translate(str.maketrans(
+                ".-",
+                f"{morse_settings["dot"]}{morse_settings["dash"]}"))
             print(question)
             i = 1
             for key in options_list:
@@ -55,7 +61,7 @@ def quiz_options(self,difficulty,morse_settings):
                 break
             if user_guess.isnumeric():
                 user_guess = int(user_guess)
-                if user_guess >= 1 and user_guess <= len((options_list)):
+                if 1 <= user_guess <= len(options_list):
                     if options_list[user_guess-1] == answer:
                         quiz_assist.correct(answer)
                         break
@@ -71,9 +77,13 @@ def quiz_options(self,difficulty,morse_settings):
 
 def quiz_guess(self,difficulty,morse_settings):
     quiz_assist = MorseQuizAssist(difficulty,self.level_dict)
-    for answer, question in random.sample(list(quiz_assist.m_quiz.items()),quiz_assist.score_max):
+    for answer, question in random.sample(
+            list(quiz_assist.m_quiz.items()),
+            quiz_assist.score_max):
         while True:
-            question = question.translate(str.maketrans(".-", f"{morse_settings["dot"]}{morse_settings["dash"]}"))
+            question = question.translate(str.maketrans(
+                ".-",
+                f"{morse_settings["dot"]}{morse_settings["dash"]}"))
             player = input(f"Decode the following Morse Code\n"
                            f"(Letters, Numbers and Spaces only):\n"
                            f"{question}\n"
@@ -82,7 +92,7 @@ def quiz_guess(self,difficulty,morse_settings):
             for char in player:
                 if not (char.isalnum() or char.isspace()):
                     error_chars.append(char)
-            if error_chars == []:
+            if not error_chars:
                 break
             else:
                 print(f"The following character/s are invalid:\n"

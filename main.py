@@ -1,7 +1,9 @@
+# Imports libraries
 from Modules.morse_parser import MorseParser
 from Modules.morse_quiz import MorseQuiz
 from Modules.morse_format import MorseFormat
 
+# Assigns classes to variables
 morse_parser = MorseParser()
 morse_quiz = MorseQuiz()
 morse_format = MorseFormat()

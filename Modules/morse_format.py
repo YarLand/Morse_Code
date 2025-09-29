@@ -4,11 +4,9 @@ import os
 class MorseFormat:
     def load_format(self,morse_settings):
         if os.path.isfile("./data.pickle"):
-            # print("found")
             with open('data.pickle', 'rb') as file:
                 morse_settings = pickle.load(file)
         else:
-            # print("not found")
             with open('data.pickle', 'wb') as file:
                 pickle.dump(morse_settings, file)
         return morse_settings

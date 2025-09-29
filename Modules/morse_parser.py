@@ -48,15 +48,23 @@ class MorseParser:
 
     @invalid_check
     def encode(self, message,morse_settings):
-        encoded = " ".join([self.m_dict[letter.lower()] for letter in message]).strip()
-        encoded = encoded.translate(str.maketrans(".-",f"{morse_settings["dot"]}{morse_settings["dash"]}"))
+        encoded = " ".join([self.m_dict[letter.lower()]
+                            for letter in message]).strip()
+        encoded = encoded.translate(str.maketrans(
+            ".-",
+            f"{morse_settings["dot"]}{morse_settings["dash"]}"))
         print(f"Encoded message: {encoded}")
 
     @invalid_check
     def decode(self, message, morse_settings):
-        flipped_dict = {value: key for key, value in self.m_dict.items()}
-        flipped_dict = {key.translate(str.maketrans(".-",f"{morse_settings["dot"]}{morse_settings["dash"]}")): value for key, value in flipped_dict.items()}
-        decoded = "".join([flipped_dict[block] for block in message.split(" ")]).strip()
+        flipped_dict = {value: key for
+                        key, value in self.m_dict.items()}
+        flipped_dict = {key.translate(str.maketrans(
+            ".-",
+            f"{morse_settings["dot"]}{morse_settings["dash"]}")):
+                            value for key, value in flipped_dict.items()}
+        decoded = "".join([flipped_dict[block] for
+                           block in message.split(" ")]).strip()
         print(f"Decoded message: {decoded}")
 
 
