@@ -6,14 +6,12 @@ morse_dict = MorseDict()
 morse_parser = MorseParser()
 
 class MorseQuiz:
-
     def __init__(self):
         ### Todo: Replace the "morse_quiz_debug.tsv" with "morse_quiz_easy.tsv"
         self.level_dict = {'Easy': 'morse_quiz_debug.tsv',
                            'Medium': 'morse_quiz_medium.tsv',
                            'Hard': 'morse_quiz_hard.tsv',
                            'Expert': 'morse_quiz_expert.tsv'}
-
 
     def morse_quiz_run(self,morse_settings):
         while True:
@@ -61,21 +59,25 @@ def quiz_options(self,difficulty,morse_settings):
             for key in options_list:
                 print(f"({i}) {key}")
                 i += 1
+            print(f"Enter (exit) to exit\n")
             user_guess = input("Please select an answer:\n")
+            if user_guess == "exit":
+                break
             if user_guess.isnumeric():
                 user_guess = int(user_guess)
                 if user_guess >= 1 and user_guess <= len((options_list)):
                     if options_list[user_guess-1] == answer:
                         print(f"Correct! It was: '{answer}'!")
                         score_user += 1
-                    elif options_list[user_guess-1] == "exit":
                         break
                     else:
                         print(f"Incorrect, It was: '{answer}'.")
                         dict_incorrect[answer] = question
-                    print(f"Current Score: {score_user}\n")
-                    break
+                        break
             print("Incorrect input, Please try again:")
+        if user_guess == "exit":
+            break
+        print(f"Current Score: {score_user}\n")
     print("Quiz Over!\n"
           f"You got {score_user} out of {score_max} correct!")
     if score_user == score_max:
@@ -89,6 +91,7 @@ def quiz_options(self,difficulty,morse_settings):
 
 
 def quiz_guess(self,difficulty,morse_settings):
+    # Repeat
     m_quiz = morse_dict.MorseInit(f"Data/Quiz/"
                                   f"{list(self.level_dict.values())[difficulty - 1]}")
     score_max = len(m_quiz)
