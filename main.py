@@ -56,15 +56,13 @@ while True:
 
         # Decode
         case "D":
-            morse_parser.message_proof(morse_parser.decode,
-                                       define_message(),
-                                       morse_settings)
+            morse_parser.decode(define_message(),
+                                morse_settings)
 
         # Encode
         case "E":
-            morse_parser.message_proof(morse_parser.encode,
-                                       define_message(),
-                                       morse_settings)
+            morse_parser.encode(define_message(),
+                                morse_settings)
 
         # View supported characters
         case "V":

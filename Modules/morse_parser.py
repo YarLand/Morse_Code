@@ -12,77 +12,116 @@ class MorseParser:
         self.dot = "."
         self.dash = "-"
 
+    # Check the function's arguments for invalid input
+    # This is used as a decorator in other functions within this module.
     def invalid_check(func):
         def character_check(self, message, settings):
 
+            # Store invalid characters / morse codes
+            invalids = []
+            # Match the detected function by name
             match func.__name__:
-                case "encode": reverse = False
-                case "decode": reverse = True
+                # If Encode, then check per character if it appears
+                # in the "Character" column in "morse_dict.tsv"
+                case "encode":
+                    for character in message:
+                        # If the character does not appear,
+                        # then store the incorrect character in the invalids list
+                        if character not in self.m_dict:
+                            invalids.append(character)
+                    # If the "invalids" list has an entry
+                    if len(invalids) > 0:
+                        # Then display the error
+                        # and cancel running the scheduled function
+                        print(f"Message contains invalid character/s: {list(set(invalids))}.\n"
+                              f"Please remove these characters from the message")
+                    else:
+                        # If no error detected,
+                        # run the scheduled function
+                        func(self, message,settings)
 
-            invalid_chars = []
-            if not reverse:
-                for character in message:
-                    if character not in self.m_dict:
-                        invalid_chars.append(character)
-                if len(invalid_chars) > 0:
-                    print(f"Message contains invalid character/s: {list(set(invalid_chars))}.\n"
-                          f"Please remove these characters from the message")
-                else:
-                    func(self, message,settings)
-            if reverse:
-                flipped_dict = {value: key for key, value in self.m_dict.items()}
-                flipped_dict = {
-                    key.translate(
-                        str.maketrans(".-/",
-                                      f"{settings["dot"]}{settings["dash"]}{settings["slash"]}")):
-                                      value for key, value in flipped_dict.items()}
-                for block in message.split(" "):
-                    if block not in flipped_dict:
-                        invalid_chars.append(block)
-                if len(invalid_chars) > 0:
-                    print(f"Message contains invalid morse codes: {list(set(invalid_chars))}.\n"
-                          f"Please remove these morse codes from the message")
-                else:
-                    func(self, message,settings)
+                # If Decode, then check per block of morse code
+                # if it exists the "MorseCode" column in "morse_dict.tsv"
+                case "decode":
+                    # Swap columns of the characters and morse codes
+                    # to compare blocks to morse code from the dictionary file
+                    flipped_dict = {value: key for key, value in self.m_dict.items()}
+                    # Apply the current character format
+                    flipped_dict = {
+                        key.translate(
+                            str.maketrans(".-/",
+                                          f"{settings["dot"]}"
+                                          f"{settings["dash"]}"
+                                          f"{settings["slash"]}")):
+                                          value for key, value in flipped_dict.items()}
+                    # For each block of morse code
+                    for block in message.split(" "):
+                        # If the block does not appear,
+                        # then store the incorrect block in the invalids list
+                        if block not in flipped_dict:
+                            invalids.append(block)
+                    # If the "invalids" list has an entry
+                    if len(invalids) > 0:
+                        # Then display the error
+                        # and cancel running the scheduled function
+                        print(f"Message contains invalid morse codes: {list(set(invalids))}.\n"
+                              f"Please remove these morse codes from the message")
+                    else:
+                        # If no error detected,
+                        # run the scheduled function
+                        func(self, message,settings)
 
         return character_check
 
 
-    def message_proof(self, func, message, morse_settings):
-        return func(message.strip(), morse_settings)
-
+    # Decorator: Checks for invalid input
     @invalid_check
+    # Turns a message into morse code
     def encode(self, message,morse_settings):
+        # Converts each letter (lower cased)
+        # to its morse equivalent, and cleans extra spaces
         encoded = " ".join([self.m_dict[letter.lower()]
                             for letter in message]).strip()
+        # Apply the current character format
         encoded = encoded.translate(
                           str.maketrans(".-/",
                           f"{morse_settings["dot"]}"
                           f"{morse_settings["dash"]}"
                           f"{morse_settings["slash"]}"))
+        # Displays the encoded message
         print(f"Encoded message: {encoded}")
 
     @invalid_check
+    # Turns morse code into english
     def decode(self, message, morse_settings):
+        # Swap columns of the characters and morse codes
         flipped_dict = {value: key for key, value in self.m_dict.items()}
+        # Apply the current character format
         flipped_dict = {key.translate(
                             str.maketrans(".-/",
                                           f"{morse_settings["dot"]}"
                                           f"{morse_settings["dash"]}"
                                           f"{morse_settings["slash"]}")):
                                           value for key, value in flipped_dict.items()}
+        # Converts each block of morse code from the input
+        # to english, and cleans extra spaces
         decoded = "".join([flipped_dict[block] for
                            block in message.split(" ")]).strip()
+        # Displays the decoded message
         print(f"Decoded message: {decoded}")
 
 
-
+    # Displays the available characters
+    # and morse codes of the program
     def show_dict(self,morse_settings):
+        # Displays the current formats
         print("Dot: ",morse_settings["dot"],"\n"
               "Dash: ", morse_settings["dash"],"\n"
               "Slash: ", morse_settings["slash"],"\n"
               "Supported characters:")
 
+        # Converts each morse code to the current format,
+        # and display each morse code and translation per line.
         for key, value in self.m_dict.items():
             translated_value = value.translate(str.maketrans(".-/",
                                                f"{morse_settings["dot"]}"
