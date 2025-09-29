@@ -1,5 +1,6 @@
 from Modules.morse_dict import MorseDict
 
+
 morse_dict = MorseDict()
 
 class MorseParser:
@@ -56,7 +57,9 @@ class MorseParser:
                             for letter in message]).strip()
         encoded = encoded.translate(
                           str.maketrans(".-/",
-                          f"{morse_settings["dot"]}{morse_settings["dash"]}{morse_settings["slash"]}"))
+                          f"{morse_settings["dot"]}"
+                          f"{morse_settings["dash"]}"
+                          f"{morse_settings["slash"]}"))
         print(f"Encoded message: {encoded}")
 
     @invalid_check
@@ -64,7 +67,9 @@ class MorseParser:
         flipped_dict = {value: key for key, value in self.m_dict.items()}
         flipped_dict = {key.translate(
                             str.maketrans(".-/",
-                                          f"{morse_settings["dot"]}{morse_settings["dash"]}{morse_settings["slash"]}")):
+                                          f"{morse_settings["dot"]}"
+                                          f"{morse_settings["dash"]}"
+                                          f"{morse_settings["slash"]}")):
                                           value for key, value in flipped_dict.items()}
         decoded = "".join([flipped_dict[block] for
                            block in message.split(" ")]).strip()
@@ -76,9 +81,11 @@ class MorseParser:
         print("Dot: ",morse_settings["dot"],"\n"
               "Dash: ", morse_settings["dash"],"\n"
               "Slash: ", morse_settings["slash"],"\n"
-              "Supported characters: ",
-              {key: value.translate(
-                          str.maketrans(".-/",
-                          f"{morse_settings["dot"]}{morse_settings["dash"]}{morse_settings["slash"]}"))
-              for key, value in self.m_dict.items()},
-              "\n")
+              "Supported characters:")
+
+        for key, value in self.m_dict.items():
+            translated_value = value.translate(str.maketrans(".-/",
+                                               f"{morse_settings["dot"]}"
+                                               f"{morse_settings["dash"]}"
+                                               f"{morse_settings["slash"]}"))
+            print(f"'{key}': '{translated_value}'")
