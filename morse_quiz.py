@@ -44,7 +44,8 @@ class MorseQuiz:
                     print("Invalid input, Try again.")
 
 def quiz_options(self,difficulty,morse_settings):
-    m_quiz = morse_dict.MorseInit(list(self.level_dict.values())[difficulty - 1])
+    m_quiz = morse_dict.MorseInit(f"Data/Quiz/"
+                                  f"{list(self.level_dict.values())[difficulty - 1]}")
     score_max = len(m_quiz)
     score_user = 0
     dict_incorrect = {}
@@ -88,7 +89,8 @@ def quiz_options(self,difficulty,morse_settings):
 
 
 def quiz_guess(self,difficulty,morse_settings):
-    m_quiz = morse_dict.MorseInit(list(self.level_dict.values())[difficulty - 1])
+    m_quiz = morse_dict.MorseInit(f"Data/Quiz/"
+                                  f"{list(self.level_dict.values())[difficulty - 1]}")
     score_max = len(m_quiz)
     score_user = 0
     dict_incorrect = {}
@@ -106,7 +108,7 @@ def quiz_guess(self,difficulty,morse_settings):
             if error_chars == []:
                 break
             else:
-                print(f"The following character\s are invalid:\n"
+                print(f"The following character/s are invalid:\n"
                       f"{set(error_chars)}\n"
                       f"Try again.")
         if player == answer:

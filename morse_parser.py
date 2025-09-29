@@ -5,7 +5,7 @@ morse_dict = MorseDict()
 class MorseParser:
 
     def __init__(self):
-        self.m_dict = morse_dict.MorseInit("morse_dict.tsv")
+        self.m_dict = morse_dict.MorseInit("Data/morse_dict.tsv")
         self.dot = "."
         self.dash = "-"
 
