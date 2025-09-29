@@ -1,4 +1,4 @@
-from morse_dict import MorseDict
+from Modules.morse_dict import MorseDict
 
 morse_dict = MorseDict()
 

@@ -1,5 +1,5 @@
-from morse_parser import MorseParser
-from morse_quiz import MorseQuiz
+from Modules.morse_parser import MorseParser
+from Modules.morse_quiz import MorseQuiz
 import pickle
 import os
 

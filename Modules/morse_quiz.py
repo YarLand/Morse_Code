@@ -1,5 +1,5 @@
-from morse_dict import MorseDict
-from morse_parser import MorseParser
+from Modules.morse_dict import MorseDict
+from Modules.morse_parser import MorseParser
 import random
 
 morse_dict = MorseDict()
