@@ -1,6 +1,7 @@
-import errno
 import csv
+import errno
 import os
+
 
 class MorseDict:
     def MorseInit(self,filename):

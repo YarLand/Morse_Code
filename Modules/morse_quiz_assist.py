@@ -4,7 +4,7 @@ class MorseQuizAssist:
     def __init__(self,difficulty,level_dict):
         morse_dict = MorseDict()
         self.m_quiz = morse_dict.MorseInit(f"Data/Quiz/"
-                                      f"{list(level_dict.values())[difficulty - 1]}")
+                                           f"{list(level_dict.values())[difficulty - 1]}")
         self.score_max = len(self.m_quiz)
         self.score_user = 0
         self.dict_incorrect = {}

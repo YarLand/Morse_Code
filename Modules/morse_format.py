@@ -1,5 +1,6 @@
-import pickle
 import os
+import pickle
+
 
 class MorseFormat:
     def load_format(self,morse_settings):

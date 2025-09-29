@@ -23,9 +23,10 @@ def define_message():
     message_text = input("Please enter the message:\n")
     return message_text
 
+print("Welcome to the Python Morse Code Project!")
+
 while True:
-    menu_main_choice = input("Welcome to the Python Morse Code Project!\n"
-                             "Would you like to?: \n"
+    menu_main_choice = input("Would you like to?: \n"
                              "- (E)ncode\n"
                              "- (D)ecode\n"
                              "- (Q)uiz\n"

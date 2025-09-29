@@ -1,5 +1,7 @@
-from Modules.morse_quiz_assist import MorseQuizAssist
 import random
+
+from Modules.morse_quiz_assist import MorseQuizAssist
+
 
 class MorseQuiz:
     def __init__(self):
@@ -38,18 +40,15 @@ class MorseQuiz:
 
 def quiz_options(self,difficulty,morse_settings):
     quiz_assist = MorseQuizAssist(difficulty,self.level_dict)
-    for answer, question in random.sample(
-            list(quiz_assist.m_quiz.items()),
-            quiz_assist.score_max):
-        options_list = [item[0] for item in random.sample(
-            list(quiz_assist.m_quiz.items()),
-            4)]
+    for answer, question in random.sample(list(quiz_assist.m_quiz.items()),
+                                          quiz_assist.score_max):
+        options_list = [item[0] for item in random.sample(list(quiz_assist.m_quiz.items()),
+                                                       4)]
         if not answer in options_list:
             options_list[0] = answer
         while True:
-            question = question.translate(str.maketrans(
-                ".-",
-                f"{morse_settings["dot"]}{morse_settings["dash"]}"))
+            question = question.translate(str.maketrans(".-",
+                                                        f"{morse_settings["dot"]}{morse_settings["dash"]}"))
             print(question)
             i = 1
             for key in options_list:
@@ -81,9 +80,8 @@ def quiz_guess(self,difficulty,morse_settings):
             list(quiz_assist.m_quiz.items()),
             quiz_assist.score_max):
         while True:
-            question = question.translate(str.maketrans(
-                ".-",
-                f"{morse_settings["dot"]}{morse_settings["dash"]}"))
+            question = question.translate(str.maketrans(".-",
+                                                        f"{morse_settings["dot"]}{morse_settings["dash"]}"))
             player = input(f"Decode the following Morse Code\n"
                            f"(Letters, Numbers and Spaces only):\n"
                            f"{question}\n"

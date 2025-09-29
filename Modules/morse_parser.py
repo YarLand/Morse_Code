@@ -29,8 +29,9 @@ class MorseParser:
             if reverse:
                 flipped_dict = {value: key for key, value in self.m_dict.items()}
                 flipped_dict = {
-                    key.translate(str.maketrans(".-", f"{settings["dot"]}{settings["dash"]}")): value for
-                    key, value in flipped_dict.items()}
+                    key.translate(str.maketrans(".-",
+                                                f"{settings["dot"]}{settings["dash"]}")): value for
+                                                key, value in flipped_dict.items()}
                 for block in message.split(" "):
                     if block not in flipped_dict:
                         invalid_chars.append(block)
@@ -59,10 +60,9 @@ class MorseParser:
     def decode(self, message, morse_settings):
         flipped_dict = {value: key for
                         key, value in self.m_dict.items()}
-        flipped_dict = {key.translate(str.maketrans(
-            ".-",
-            f"{morse_settings["dot"]}{morse_settings["dash"]}")):
-                            value for key, value in flipped_dict.items()}
+        flipped_dict = {key.translate(str.maketrans(".-",
+                                                    f"{morse_settings["dot"]}{morse_settings["dash"]}")):
+                                                    value for key, value in flipped_dict.items()}
         decoded = "".join([flipped_dict[block] for
                            block in message.split(" ")]).strip()
         print(f"Decoded message: {decoded}")
@@ -70,4 +70,6 @@ class MorseParser:
 
 
     def show_dict(self):
-        print("Dot: ",self.dot,"\nDash: ", self.dash,"\nSupported characters: ", self.m_dict,"\n")
+        print("Dot: ",self.dot,"\n"
+              "Dash: ", self.dash,"\n"
+              "Supported characters: ",self.m_dict,"\n")
