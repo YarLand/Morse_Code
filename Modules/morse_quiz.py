@@ -1,14 +1,9 @@
-from Modules.morse_dict import MorseDict
-from Modules.morse_parser import MorseParser
+from Modules.morse_quiz_assist import MorseQuizAssist
 import random
-
-morse_dict = MorseDict()
-morse_parser = MorseParser()
 
 class MorseQuiz:
     def __init__(self):
-        ### Todo: Replace the "morse_quiz_debug.tsv" with "morse_quiz_easy.tsv"
-        self.level_dict = {'Easy': 'morse_quiz_debug.tsv',
+        self.level_dict = {'Easy': 'morse_quiz_easy.tsv',
                            'Medium': 'morse_quiz_medium.tsv',
                            'Hard': 'morse_quiz_hard.tsv',
                            'Expert': 'morse_quiz_expert.tsv'}
@@ -29,7 +24,7 @@ class MorseQuiz:
 
         while True:
             quiz_style= input("Would you like the questions to:\n"
-                              "(1) have options\n"
+                              "(1) have options.\n"
                               "(2) guess directly?\n")
             match quiz_style:
                 case "1":
@@ -42,16 +37,11 @@ class MorseQuiz:
                     print("Invalid input, Try again.")
 
 def quiz_options(self,difficulty,morse_settings):
-    m_quiz = morse_dict.MorseInit(f"Data/Quiz/"
-                                  f"{list(self.level_dict.values())[difficulty - 1]}")
-    score_max = len(m_quiz)
-    score_user = 0
-    dict_incorrect = {}
-    for answer, question in random.sample(list(m_quiz.items()), score_max):
-        options_list = [item[0] for item in random.sample(list(m_quiz.items()),4)]
+    quiz_assist = MorseQuizAssist(difficulty,self.level_dict)
+    for answer, question in random.sample(list(quiz_assist.m_quiz.items()), quiz_assist.score_max):
+        options_list = [item[0] for item in random.sample(list(quiz_assist.m_quiz.items()),4)]
         if not answer in options_list:
             options_list[0] = answer
-        # print(list(set(options_list)))
         while True:
             question = question.translate(str.maketrans(".-", f"{morse_settings["dot"]}{morse_settings["dash"]}"))
             print(question)
@@ -59,7 +49,7 @@ def quiz_options(self,difficulty,morse_settings):
             for key in options_list:
                 print(f"({i}) {key}")
                 i += 1
-            print(f"Enter (exit) to exit\n")
+            print(f"Enter (exit) to exit.\n")
             user_guess = input("Please select an answer:\n")
             if user_guess == "exit":
                 break
@@ -67,43 +57,27 @@ def quiz_options(self,difficulty,morse_settings):
                 user_guess = int(user_guess)
                 if user_guess >= 1 and user_guess <= len((options_list)):
                     if options_list[user_guess-1] == answer:
-                        print(f"Correct! It was: '{answer}'!")
-                        score_user += 1
+                        quiz_assist.correct(answer)
                         break
                     else:
-                        print(f"Incorrect, It was: '{answer}'.")
-                        dict_incorrect[answer] = question
+                        quiz_assist.incorrect(answer,question)
                         break
             print("Incorrect input, Please try again:")
         if user_guess == "exit":
             break
-        print(f"Current Score: {score_user}\n")
-    print("Quiz Over!\n"
-          f"You got {score_user} out of {score_max} correct!")
-    if score_user == score_max:
-        print("A perfect score! Good job!\n")
-    elif score_user < score_max:
-        print("Here are the answers for the incorrect guesses:")
-        for answer, question in dict_incorrect.items():
-            print(f"- '{answer}' = '{question}'")
-        print("Try aiming for a perfect score, Good luck!\n")
-
+        quiz_assist.current_score()
+    quiz_assist.quiz_finish()
 
 
 def quiz_guess(self,difficulty,morse_settings):
-    # Repeat
-    m_quiz = morse_dict.MorseInit(f"Data/Quiz/"
-                                  f"{list(self.level_dict.values())[difficulty - 1]}")
-    score_max = len(m_quiz)
-    score_user = 0
-    dict_incorrect = {}
-    for answer, question in random.sample(list(m_quiz.items()),score_max):
+    quiz_assist = MorseQuizAssist(difficulty,self.level_dict)
+    for answer, question in random.sample(list(quiz_assist.m_quiz.items()),quiz_assist.score_max):
         while True:
             question = question.translate(str.maketrans(".-", f"{morse_settings["dot"]}{morse_settings["dash"]}"))
             player = input(f"Decode the following Morse Code\n"
                            f"(Letters, Numbers and Spaces only):\n"
                            f"{question}\n"
-                           f"Enter (exit) to exit\n").lower()
+                           f"Enter (exit) to exit.\n").lower()
             error_chars = []
             for char in player:
                 if not (char.isalnum() or char.isspace()):
@@ -115,20 +89,10 @@ def quiz_guess(self,difficulty,morse_settings):
                       f"{set(error_chars)}\n"
                       f"Try again.")
         if player == answer:
-            print(f"Correct! It was: '{answer}'!")
-            score_user += 1
+            quiz_assist.correct(answer)
         elif player == "exit":
             break
         else:
-            print(f"Incorrect, It was: '{answer}'.")
-            dict_incorrect[answer] = question
-        print(f"Current Score: {score_user}\n")
-    print("Quiz Over!\n"
-          f"You got {score_user} out of {score_max} correct!")
-    if score_user == score_max:
-        print("A perfect score! Good job!\n")
-    elif score_user < score_max:
-        print("Here are the answers for the incorrect guesses:")
-        for answer, question in dict_incorrect.items():
-            print(f"- '{answer}' = '{question}'")
-        print("Try aiming for a perfect score, Good luck!\n")
+            quiz_assist.incorrect(answer, question)
+        quiz_assist.current_score()
+    quiz_assist.quiz_finish()
