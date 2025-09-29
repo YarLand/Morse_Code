@@ -1,10 +1,10 @@
 from Modules.morse_parser import MorseParser
 from Modules.morse_quiz import MorseQuiz
-import pickle
-import os
+from Modules.morse_format import MorseFormat
 
 morse_parser = MorseParser()
 morse_quiz = MorseQuiz()
+morse_format = MorseFormat()
 
 default_characters = {"dot": ".",
                       "dash": "-"}
@@ -12,46 +12,9 @@ default_characters = {"dot": ".",
 morse_settings = {"dot": default_characters["dot"],
                   "dash": default_characters["dash"]}
 
-if os.path.isfile("./data.pickle"):
-    # print("found")
-    with open('data.pickle', 'rb') as file:
-        morse_settings = pickle.load(file)
-else:
-    # print("not found")
-    with open('data.pickle', 'wb') as file_a:
-        pickle.dump(morse_settings, file_a)
+morse_settings = morse_format.load_format(morse_settings)
 
 
-def format_change(default_characters):
-    global morse_settings
-
-    for char, value in default_characters.items():
-        while True:
-            char_change = input(f"Please input the new {char} character: \n"
-                                f"(Default: '{value}', leave blank to cancel)\n")
-            if len(char_change) > 1:
-                print("Expected only 1 character, Restarting...")
-            elif char_change == "":
-                break
-            else:
-                if char == "dot":
-                    morse_settings["dot"] = char_change
-                if char == "dash":
-                    morse_settings["dash"] = char_change
-                break
-    while True:
-        input_save = input("Save changes for future use?\n"
-                           "(Y)es\n"
-                           "(N)o\n")
-        match input_save.upper():
-            case "Y":
-                # print("save")
-                with open('data.pickle', 'wb') as file_a:
-                    pickle.dump(morse_settings, file_a)
-                break
-            case "N":
-                break
-        print("Invalid input, please try again")
 
 def define_message():
     print(f"Current writing format: {morse_settings}")
@@ -81,17 +44,12 @@ while True:
                 define_message(),
                 morse_settings)
         case "V":
-            morse_parser.debug_show_dict()
+            morse_parser.show_dict()
         case "C":
-            format_change(default_characters)
+            morse_format.format_change(default_characters,morse_settings)
         case "Q":
             morse_quiz.morse_quiz_run(morse_settings)
         case "X":
             break
         case _:
             print("Invalid Choice, please try again.\n")
-
-
-# morse_parser.encode("hi lol")
-#
-# morse_parser.decode(".... .. / .-.. --- .-..")

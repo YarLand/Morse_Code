@@ -10,14 +10,12 @@ class MorseParser:
         self.dash = "-"
 
     def invalid_check(func):
-        # TODO: implement reverse check to know what errors to check.
         def character_check(self, message, settings):
+
             match func.__name__:
                 case "encode": reverse = False
                 case "decode": reverse = True
 
-            # print(args)
-            # message = args[0]
             invalid_chars = []
             if not reverse:
                 for character in message:
@@ -63,5 +61,5 @@ class MorseParser:
 
 
 
-    def debug_show_dict(self):
+    def show_dict(self):
         print("Dot: ",self.dot,"\nDash: ", self.dash,"\nSupported characters: ", self.m_dict,"\n")
