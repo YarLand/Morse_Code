@@ -76,6 +76,8 @@ def quiz_options(self,difficulty,morse_settings):
         # the correct answer
         if not answer in options_list:
             options_list[0] = answer
+        # Randomize the list
+        random.shuffle(options_list)
         # Question Loop
         while True:
             # Converts morse question into the current format
