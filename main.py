@@ -76,10 +76,10 @@ while bool_loop_menu:
     # Checks if the option exists in the dictionary
     if dict_selection is not None:
         # Defines the arguments needed
-        args = dict_selection["arguments"]
+        dict_selection_args = dict_selection["arguments"]
 
         # Calls the function with arguments, based on user choice
-        dict_selection["function"](*args)
+        dict_selection["function"](*dict_selection_args)
 
     else:
         # If the input doesn't match an entry in the dictionary,

@@ -11,11 +11,10 @@ class MorseDict:
             # If the file exists, open it in "Read" mode
             with open(filename, mode='r') as file:
                 # Read the ".tsv" file
-                # and place the result into an iterator
-                iter_reader = iter(csv.reader(file, delimiter='\t'))
+                dict_reader = csv.DictReader(file,delimiter='\t')
                 # Skip the header line of the file
-                next(iter_reader)
-                return {rows[0]:rows[1] for rows in iter_reader}
+                dict_reader_no_header = list(dict_reader)[1:]
+                return {rows["Character"]:rows["MorseCode"] for rows in dict_reader_no_header}
         # If the file does not exist,
         # Raise an error and stop the program.
         else:

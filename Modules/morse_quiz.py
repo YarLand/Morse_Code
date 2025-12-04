@@ -116,7 +116,7 @@ def quiz_options(self,difficulty,morse_settings):
                 if 1 <= user_guess <= len(options_list):
                     # If the option was the correct answer
                     if options_list[user_guess-1] == answer:
-                        # Then the player is rewarded a point
+                        # Then the user is rewarded a point
                         quiz_assist.correct(answer)
                         bool_loop_question = False
                     # If it was incorrect
@@ -133,7 +133,7 @@ def quiz_options(self,difficulty,morse_settings):
         # Displays the current score
         quiz_assist.current_score()
     # Displays that the quiz is done
-    # and shows the score and errors of the player.
+    # and shows the score and errors of the user.
     quiz_assist.quiz_finish()
 
 
@@ -156,14 +156,14 @@ def quiz_input(self, difficulty, morse_settings):
                                           f"{morse_settings["dash"]}"
                                           f"{morse_settings["slash"]}"))
             # Prompt the user for decoding input
-            player = input(f"Decode the following Morse Code\n"
+            user_guess = input(f"Decode the following Morse Code\n"
                            f"(Letters, Numbers and Spaces only):\n"
                            f"{question}\n"
                            f"Enter (exit) to exit.\n").lower()
             # Potential list of invalid characters.
             error_chars = []
             # For each character in input
-            for char in player:
+            for char in user_guess:
                 # check if it isn't a character,
                 # number or space
                 if not (char.isalnum() or char.isspace()):
@@ -180,11 +180,11 @@ def quiz_input(self, difficulty, morse_settings):
                       f"{set(error_chars)}\n"
                       f"Try again.")
         # If the input was the correct answer
-        if player == answer:
-            # Then the player is rewarded a point
+        if user_guess == answer:
+            # Then the user is rewarded a point
             quiz_assist.correct(answer)
         # if the input is "exit" then quit the quiz.
-        elif player == "exit":
+        elif user_guess == "exit":
             break
         # If it was incorrect
         else:
@@ -194,5 +194,5 @@ def quiz_input(self, difficulty, morse_settings):
         # Displays the current score
         quiz_assist.current_score()
     # Displays that the quiz is done
-    # and shows the score and errors of the player.
+    # and shows the score and errors of the user.
     quiz_assist.quiz_finish()
