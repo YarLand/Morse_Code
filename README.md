@@ -6,7 +6,8 @@ This project provides several tools to translate and learn Morse code:
 * Translate English to Morse
 * Reverse translation from Morse to English
 * Quiz (Multiple choice or typing the answer)
-* Settings to change the characters used to display Morse code (Default: "-", ".")
+* Settings to change the characters used to display Morse code
+  (Defaults: Dot: ".", Dash: "-", Space: "/")
 
 
 ## How to run the project
