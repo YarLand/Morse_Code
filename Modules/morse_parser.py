@@ -61,7 +61,7 @@ class MorseParser:
                             str.maketrans(".-/",
                                           f"{settings["dot"]}"
                                           f"{settings["dash"]}"
-                                          f"{settings["slash"]}")):
+                                          f"{settings["space"]}")):
                                           value for key, value in flipped_dict.items()}
                     # For each block of morse code
                     for block in message.split(" "):
@@ -96,7 +96,7 @@ class MorseParser:
                           str.maketrans(".-/",
                           f"{current_morse_settings["dot"]}"
                           f"{current_morse_settings["dash"]}"
-                          f"{current_morse_settings["slash"]}"))
+                          f"{current_morse_settings["space"]}"))
         # Displays the encoded message
         print(f"Encoded message: {encoded}")
 
@@ -110,7 +110,7 @@ class MorseParser:
                             str.maketrans(".-/",
                                           f"{current_morse_settings["dot"]}"
                                           f"{current_morse_settings["dash"]}"
-                                          f"{current_morse_settings["slash"]}")):
+                                          f"{current_morse_settings["space"]}")):
                                           value for key, value in flipped_dict.items()}
         # Converts each block of morse code from the input
         # to english, and cleans extra spaces
@@ -126,7 +126,7 @@ class MorseParser:
         # Displays the current formats
         print("Dot: ",current_morse_settings["dot"],"\n"
               "Dash: ", current_morse_settings["dash"],"\n"
-              "Slash: ", current_morse_settings["slash"],"\n"
+              "Space: ", current_morse_settings["space"],"\n"
               "Supported characters:")
 
         # Converts each morse code to the current format,
@@ -135,5 +135,5 @@ class MorseParser:
             translated_value = value.translate(str.maketrans(".-/",
                                                f"{current_morse_settings["dot"]}"
                                                f"{current_morse_settings["dash"]}"
-                                               f"{current_morse_settings["slash"]}"))
+                                               f"{current_morse_settings["space"]}"))
             print(f"'{key}': '{translated_value}'")

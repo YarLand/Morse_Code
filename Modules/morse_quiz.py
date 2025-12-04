@@ -88,7 +88,7 @@ def quiz_options(self,difficulty,current_morse_settings):
             question = question.translate(str.maketrans(".-/",
                                                         f"{current_morse_settings["dot"]}"
                                                         f"{current_morse_settings["dash"]}"
-                                                        f"{current_morse_settings["slash"]}"))
+                                                        f"{current_morse_settings["space"]}"))
             print(question)
 
             # Since ranges are 0-index,
@@ -154,7 +154,7 @@ def quiz_input(self, difficulty, current_morse_settings):
             question = question.translate(str.maketrans(".-/",
                                           f"{current_morse_settings["dot"]}"
                                           f"{current_morse_settings["dash"]}"
-                                          f"{current_morse_settings["slash"]}"))
+                                          f"{current_morse_settings["space"]}"))
             # Prompt the user for decoding input
             user_guess = input(f"Decode the following Morse Code\n"
                            f"(Letters, Numbers and Spaces only):\n"

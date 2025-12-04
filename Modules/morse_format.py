@@ -59,8 +59,8 @@ class MorseFormat:
                         current_morse_settings["dot"] = char_change
                     if char == "dash":
                         current_morse_settings["dash"] = char_change
-                    if char == "slash":
-                        current_morse_settings["slash"] = char_change
+                    if char == "space":
+                        current_morse_settings["space"] = char_change
                     bool_loop_format_change = False
         bool_loop_save_format_change = True
         while bool_loop_save_format_change:
