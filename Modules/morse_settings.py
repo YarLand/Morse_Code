@@ -3,9 +3,10 @@ import errno
 import os
 
 
-class MorseDict:
+class MorseSettings:
     # Initialize the relevant morse dictionary ".tsv" file
-    def MorseInit(self,filename):
+    def SettingsInit(self):
+        filename = "Data/morse_settings.tsv"
         # Detect if the file exists
         if os.path.isfile(filename):
             # If the file exists, open it in "Read" mode
@@ -13,7 +14,7 @@ class MorseDict:
                 # Read the ".tsv" file using DictReader,
                 # which skip the header line of the file
                 dict_reader = csv.DictReader(file,delimiter='\t')
-                return {rows["Character"]:rows["MorseCode"] for rows in dict_reader}
+                return {rows["default_characters"]:rows["value"] for rows in dict_reader}
         # If the file does not exist,
         # Raise an error and stop the program.
         else:

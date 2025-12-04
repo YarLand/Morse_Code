@@ -11,7 +11,7 @@ class MorseQuiz:
                            'Hard': 'morse_quiz_hard.tsv',
                            'Expert': 'morse_quiz_expert.tsv'}
 
-    def morse_quiz_run(self,morse_settings):
+    def morse_quiz_run(self,current_morse_settings):
         # Runs the quiz program
         bool_loop_diff = True
         while bool_loop_diff:
@@ -51,17 +51,17 @@ class MorseQuiz:
             match quiz_style:
                 # Options Style
                 case "1":
-                    quiz_options(self,difficulty,morse_settings)
+                    quiz_options(self,difficulty,current_morse_settings)
                     bool_loop_style = False
                 # Input Style
                 case "2":
-                    quiz_input(self, difficulty, morse_settings)
+                    quiz_input(self, difficulty, current_morse_settings)
                     bool_loop_style = False
                 # Invalid Input
                 case _:
                     print("Invalid input, Try again.")
 
-def quiz_options(self,difficulty,morse_settings):
+def quiz_options(self,difficulty,current_morse_settings):
     # Initiates the quiz assist module,
     # which facilitates common quiz functions.
     quiz_assist = MorseQuizAssist(difficulty,self.level_dict)
@@ -86,9 +86,9 @@ def quiz_options(self,difficulty,morse_settings):
             # Converts morse question into the current format
             # and displays to the user
             question = question.translate(str.maketrans(".-/",
-                                                        f"{morse_settings["dot"]}"
-                                                        f"{morse_settings["dash"]}"
-                                                        f"{morse_settings["slash"]}"))
+                                                        f"{current_morse_settings["dot"]}"
+                                                        f"{current_morse_settings["dash"]}"
+                                                        f"{current_morse_settings["slash"]}"))
             print(question)
 
             # Since ranges are 0-index,
@@ -137,7 +137,7 @@ def quiz_options(self,difficulty,morse_settings):
     quiz_assist.quiz_finish()
 
 
-def quiz_input(self, difficulty, morse_settings):
+def quiz_input(self, difficulty, current_morse_settings):
     # Initiates the quiz assist module,
     # which facilitates common quiz functions.
     quiz_assist = MorseQuizAssist(difficulty,self.level_dict)
@@ -152,9 +152,9 @@ def quiz_input(self, difficulty, morse_settings):
             # Converts morse question into the current format
             # and displays to the user
             question = question.translate(str.maketrans(".-/",
-                                          f"{morse_settings["dot"]}"
-                                          f"{morse_settings["dash"]}"
-                                          f"{morse_settings["slash"]}"))
+                                          f"{current_morse_settings["dot"]}"
+                                          f"{current_morse_settings["dash"]}"
+                                          f"{current_morse_settings["slash"]}"))
             # Prompt the user for decoding input
             user_guess = input(f"Decode the following Morse Code\n"
                            f"(Letters, Numbers and Spaces only):\n"

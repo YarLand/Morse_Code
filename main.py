@@ -3,26 +3,18 @@
 from Modules.morse_parser import MorseParser
 from Modules.morse_quiz import MorseQuiz
 from Modules.morse_format import MorseFormat
+from Modules.morse_settings import MorseSettings
 
 # Assigns classes to variables
 morse_parser = MorseParser()
 morse_quiz = MorseQuiz()
 morse_format = MorseFormat()
-
-# Settings Variables
-default_characters = {"dot": ".",
-                      "dash": "-",
-                      "slash": "/"}
-
-# Set the morse settings to the default values
-morse_settings = {"dot": default_characters["dot"],
-                  "dash": default_characters["dash"],
-                  "slash": default_characters["slash"]}
+morse_settings = MorseSettings()
 
 # Set the morse settings from a file,
 # If the file didn't exist,
 # Then the default values will be used
-morse_settings = morse_format.load_format(morse_settings)
+current_morse_settings = morse_format.load_format()
 
 print("Welcome to the Python Morse Code Project!")
 
@@ -37,15 +29,15 @@ def exit_menu():
 # Which consists of the relevant function, and the arguments needed to pass
 dict_menu_func = {
     # Decode
-    "D": {"function":morse_parser.decode,"arguments":(morse_settings,)},
+    "D": {"function":morse_parser.decode,"arguments":(current_morse_settings,)},
     # Encode
-    "E": {"function":morse_parser.encode,"arguments":(morse_settings,)},
+    "E": {"function":morse_parser.encode,"arguments":(current_morse_settings,)},
     # View supported characters
-    "V": {"function":morse_parser.show_dict,"arguments":(morse_settings,)},
+    "V": {"function":morse_parser.show_dict,"arguments":(current_morse_settings,)},
     # Change format
-    "C": {"function":morse_format.format_change,"arguments":(default_characters, morse_settings,)},
+    "C": {"function":morse_format.format_change,"arguments":(current_morse_settings,)},
     # Quiz
-    "Q": {"function":morse_quiz.morse_quiz_run,"arguments":(morse_settings,)},
+    "Q": {"function":morse_quiz.morse_quiz_run,"arguments":(current_morse_settings,)},
     # Exit the program
     "X": {"function":exit_menu,"arguments":""},
 }
