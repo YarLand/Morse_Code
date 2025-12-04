@@ -12,7 +12,8 @@ This project provides several tools to translate and learn Morse code:
 ## How to run the project
 1. Download the repository as a ZIP file
 2. Extract ZIP contents into a folder
-3. Run "main.py"
+3. Install Python 3
+4. Run "main.py"
 
 
 ## Known issues / Limitations
@@ -22,6 +23,6 @@ The program only supports conversion in
 * Spaces
 
 
-### Special Thanks
+## Special Thanks
 100 Days of Code Course on Udemy:
 https://www.udemy.com/course/100-days-of-code/
