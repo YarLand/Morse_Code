@@ -13,7 +13,8 @@ class MorseQuiz:
 
     def morse_quiz_run(self,morse_settings):
         # Runs the quiz program
-        while True:
+        bool_loop_diff = True
+        while bool_loop_diff:
             # Displays the difficulty levels
             print("Please select difficulty level:")
             # Since ranges are 0-index,
@@ -34,14 +35,15 @@ class MorseQuiz:
                 # Convert string to integer number
                 difficulty = int(difficulty)
                 # If the input is in range,
-                # break the loop process and proceed
+                # exit the loop process and proceed
                 if 1 <= difficulty <= len(self.level_dict):
-                    break
+                    bool_loop_diff = False
             # If the input is incorrect,
             # display error and repeat loop
             print("Incorrect input, Please try again:")
 
-        while True:
+        bool_loop_style = True
+        while bool_loop_style:
             # Quiz style selection
             quiz_style= input("Choose answer format:\n"
                               "(1) Options\n"
@@ -50,11 +52,11 @@ class MorseQuiz:
                 # Options Style
                 case "1":
                     quiz_options(self,difficulty,morse_settings)
-                    break
+                    bool_loop_style = False
                 # Input Style
                 case "2":
                     quiz_input(self, difficulty, morse_settings)
-                    break
+                    bool_loop_style = False
                 # Invalid Input
                 case _:
                     print("Invalid input, Try again.")
@@ -79,7 +81,8 @@ def quiz_options(self,difficulty,morse_settings):
         # Randomize the list
         random.shuffle(options_list)
         # Question Loop
-        while True:
+        bool_loop_question = True
+        while bool_loop_question:
             # Converts morse question into the current format
             # and displays to the user
             question = question.translate(str.maketrans(".-/",
@@ -103,7 +106,7 @@ def quiz_options(self,difficulty,morse_settings):
             user_guess = input("Please select an answer:\n")
             # if the input is "exit" then quit the quiz.
             if user_guess == "exit":
-                break
+                bool_loop_question = False
             # Check if input is a number,
             # since we want to convert string to integer for comparison
             if user_guess.isnumeric():
@@ -115,17 +118,16 @@ def quiz_options(self,difficulty,morse_settings):
                     if options_list[user_guess-1] == answer:
                         # Then the player is rewarded a point
                         quiz_assist.correct(answer)
-                        break
+                        bool_loop_question = False
                     # If it was incorrect
                     else:
                         # Then the user will be shown the correct answer
                         # and the error is added to a list of wrong answers
                         quiz_assist.incorrect(answer,question)
-                        break
+                        bool_loop_question = False
             # If the input was invalid, restart the current loop
             print("Incorrect input, Please try again:")
         # if the input is "exit" then quit the quiz.
-        # It is needed a second time due to 2 loops.
         if user_guess == "exit":
             break
         # Displays the current score
@@ -145,7 +147,8 @@ def quiz_input(self, difficulty, morse_settings):
             list(quiz_assist.m_quiz.items()),
             quiz_assist.score_max):
         # Question Loop
-        while True:
+        bool_loop_question = True
+        while bool_loop_question:
             # Converts morse question into the current format
             # and displays to the user
             question = question.translate(str.maketrans(".-/",
@@ -169,7 +172,7 @@ def quiz_input(self, difficulty, morse_settings):
             # If the entire input message
             # passed the check, proceed with the quiz.
             if not error_chars:
-                break
+                bool_loop_question = False
             # If there was one or more invalid characters,
             # Then show the user these characters and repeat the loop
             else:

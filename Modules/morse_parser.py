@@ -5,6 +5,13 @@ morse_dict = MorseDict()
 
 class MorseParser:
 
+    # Prompts the user to input the message,
+    # and returns as a string
+    def define_message(self,settings):
+        print(f"Current Morse format: {settings}")
+        message_text = input("Please enter the message:\n")
+        return message_text
+
     # If the input is not valid for this selection,
     # Then prompt the user to try again and restart the loop
     def __init__(self):
@@ -12,11 +19,13 @@ class MorseParser:
         self.dot = "."
         self.dash = "-"
 
+
     # Check the function's arguments for invalid input
     # This is used as a decorator in other functions within this module.
     def invalid_check(func):
-        def character_check(self, message, settings):
-
+        def character_check(self, settings):
+            # Prompt the user to input a message
+            message = self.define_message(settings)
             # Store invalid characters / morse codes
             invalids = []
             # Match the detected function by name
@@ -77,7 +86,7 @@ class MorseParser:
     # Decorator: Checks for invalid input
     @invalid_check
     # Turns a message into morse code
-    def encode(self, message,morse_settings):
+    def encode(self,message, morse_settings):
         # Converts each letter (lower cased)
         # to its morse equivalent, and cleans extra spaces
         encoded = " ".join([self.m_dict[letter.lower()]

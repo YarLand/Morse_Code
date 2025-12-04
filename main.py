@@ -1,4 +1,5 @@
 # Imports libraries
+
 from Modules.morse_parser import MorseParser
 from Modules.morse_quiz import MorseQuiz
 from Modules.morse_format import MorseFormat
@@ -23,20 +24,38 @@ morse_settings = {"dot": default_characters["dot"],
 # Then the default values will be used
 morse_settings = morse_format.load_format(morse_settings)
 
-
-# Prompts the user to input the message,
-# and returns as a string
-def define_message():
-    print(f"Current writing format: {morse_settings}")
-    message_text = input("Please enter the message:\n")
-    return message_text
-
 print("Welcome to the Python Morse Code Project!")
+
+
+# Function to exit the menu
+def exit_menu():
+    global bool_loop_menu
+    bool_loop_menu = False
+
+# Dictionary of Menu functions,
+# Each letter holds an inner dictionary,
+# Which consists of the relevant function, and the arguments needed to pass
+dict_menu_func = {
+    # Decode
+    "D": {"function":morse_parser.decode,"arguments":(morse_settings,)},
+    # Encode
+    "E": {"function":morse_parser.encode,"arguments":(morse_settings,)},
+    # View supported characters
+    "V": {"function":morse_parser.show_dict,"arguments":(morse_settings,)},
+    # Change format
+    "C": {"function":morse_format.format_change,"arguments":(default_characters, morse_settings,)},
+    # Quiz
+    "Q": {"function":morse_quiz.morse_quiz_run,"arguments":(morse_settings,)},
+    # Exit the program
+    "X": {"function":exit_menu,"arguments":""},
+}
 
 # Menu Loop: As long as the user doesn't exit,
 #            This will keep them inside the program
 #            whenever they finish with a module.
-while True:
+bool_loop_menu = True
+
+while bool_loop_menu:
     # Prompt and display choices
     # for the user to choose
     menu_main_choice = input("Would you like to?: \n"
@@ -51,38 +70,18 @@ while True:
     # Converts the user's choice
     # and turns the input into upper case
     # which makes the choice case-insensitive,
-    # And matches the input to expected cases.
-    match menu_main_choice.upper():
+    # And matches the input to keys in a dictionary.
+    dict_selection = dict_menu_func.get(menu_main_choice.upper())
 
-        # Decode
-        case "D":
-            morse_parser.decode(define_message(),
-                                morse_settings)
+    # Checks if the option exists in the dictionary
+    if dict_selection is not None:
+        # Defines the arguments needed
+        args = dict_selection["arguments"]
 
-        # Encode
-        case "E":
-            morse_parser.encode(define_message(),
-                                morse_settings)
+        # Calls the function with arguments, based on user choice
+        dict_selection["function"](*args)
 
-        # View supported characters
-        case "V":
-            morse_parser.show_dict(morse_settings)
-
-        # Change format
-        case "C":
-            morse_format.format_change(
-                default_characters,
-                morse_settings)
-
-        # Quiz
-        case "Q":
-            morse_quiz.morse_quiz_run(morse_settings)
-
-        # Exit the program
-        case "X":
-            break
-
-        # If the input doesn't match the cases above,
+    else:
+        # If the input doesn't match an entry in the dictionary,
         # Then catch the odd input and prompt the user to try again.
-        case _:
-            print("Invalid Choice, please try again.\n")
+        print("Invalid Choice, please try again.\n")
