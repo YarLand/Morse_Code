@@ -1,5 +1,4 @@
 # Imports libraries
-
 from Modules.morse_parser import MorseParser
 from Modules.morse_quiz import MorseQuiz
 from Modules.morse_format import MorseFormat
@@ -19,11 +18,6 @@ current_morse_settings = morse_format.load_format()
 print("Welcome to the Python Morse Code Project!")
 
 
-# Function to exit the menu
-def exit_menu():
-    global bool_loop_menu
-    bool_loop_menu = False
-
 # Dictionary of Menu functions,
 # Each letter holds an inner dictionary,
 # Which consists of the relevant function, and the arguments needed to pass
@@ -38,8 +32,6 @@ dict_menu_func = {
     "C": {"function":morse_format.format_change,"arguments":(current_morse_settings,)},
     # Quiz
     "Q": {"function":morse_quiz.morse_quiz_run,"arguments":(current_morse_settings,)},
-    # Exit the program
-    "X": {"function":exit_menu,"arguments":""},
 }
 
 # Menu Loop: As long as the user doesn't exit,
@@ -49,7 +41,8 @@ bool_loop_menu = True
 
 while bool_loop_menu:
     # Prompt and display choices
-    # for the user to choose
+    # for the user to choose,
+    # The result will be converted to upper case
     menu_main_choice = input("Would you like to?: \n"
                              "- (E)ncode\n"
                              "- (D)ecode\n"
@@ -57,13 +50,15 @@ while bool_loop_menu:
                              "- (V)iew supported characters\n"
                              "- (C)hange format\n"
                              "- e(X)it"
-                             "\n")
+                             "\n").upper()
 
-    # Converts the user's choice
-    # and turns the input into upper case
-    # which makes the choice case-insensitive,
-    # And matches the input to keys in a dictionary.
-    dict_selection = dict_menu_func.get(menu_main_choice.upper())
+    # Exit the program
+    if menu_main_choice == "X":
+        bool_loop_menu = False
+        break
+
+    # Matches the input to keys in a dictionary.
+    dict_selection = dict_menu_func.get(menu_main_choice)
 
     # Checks if the option exists in the dictionary
     if dict_selection is not None:
@@ -76,4 +71,4 @@ while bool_loop_menu:
     else:
         # If the input doesn't match an entry in the dictionary,
         # Then catch the odd input and prompt the user to try again.
-        print("Invalid Choice, please try again.\n")
+        print("Invalid Choice, please try again.")

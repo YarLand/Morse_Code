@@ -10,7 +10,7 @@ class MorseSettings:
         # Detect if the file exists
         if os.path.isfile(filename):
             # If the file exists, open it in "Read" mode
-            with open(filename, mode='r') as file:
+            with open(filename, mode='r', encoding='utf-8') as file:
                 # Read the ".tsv" file using DictReader,
                 # which skip the header line of the file
                 dict_reader = csv.DictReader(file,delimiter='\t')
