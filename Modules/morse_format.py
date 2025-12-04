@@ -2,6 +2,7 @@ import os
 import pickle
 from Modules.morse_settings import MorseSettings
 
+
 class MorseFormat:
 
     def __init__(self):
@@ -10,8 +11,8 @@ class MorseFormat:
         self.default_characters = morse_settings.SettingsInit()
 
     # Saves the format settings into a pickle file
-    def save_format(self,changes):
-        with open('data.pickle', 'wb') as file:
+    def save_format(self, changes):
+        with open("data.pickle", "wb") as file:
             pickle.dump(changes, file)
         return changes
 
@@ -21,7 +22,7 @@ class MorseFormat:
         current_morse_settings = {}
         # Checks if file exists.
         if os.path.isfile("./data.pickle"):
-            with open('data.pickle', 'rb') as file:
+            with open("data.pickle", "rb") as file:
                 current_morse_settings = pickle.load(file)
         # If file does not exist,
         # Create one from the default settings
@@ -29,10 +30,8 @@ class MorseFormat:
             current_morse_settings = self.save_format(self.default_characters)
         return current_morse_settings
 
-
-
     # Change the format of the dots and dashes
-    def format_change(self,current_morse_settings):
+    def format_change(self, current_morse_settings):
 
         # Repeat for the dots and dashes
         for char, value in self.default_characters.items():
@@ -40,10 +39,12 @@ class MorseFormat:
             while bool_loop_format_change:
                 # Prompt the user to input a new character
                 # for the displayed type
-                char_change = input(f"Please input the new {char} character: \n"
-                                    f"(Current: '{current_morse_settings[char]}',\n"
-                                    f"Default: '{value}',\n"
-                                    f"leave blank to cancel)\n")
+                char_change = input(
+                    f"Please input the new {char} character: \n"
+                    f"(Current: '{current_morse_settings[char]}',\n"
+                    f"Default: '{value}',\n"
+                    f"leave blank to cancel)\n"
+                )
                 # If detected more than 1 character,
                 # Restart the process for the current type.
                 if len(char_change) > 1:
@@ -66,9 +67,7 @@ class MorseFormat:
         while bool_loop_save_format_change:
             # Prompt the user to save as a file
             # that can be loaded in future runs.
-            input_save = input("Save changes for future use?\n"
-                               "(Y)es\n"
-                               "(N)o\n")
+            input_save = input("Save changes for future use?\n" "(Y)es\n" "(N)o\n")
             match input_save.upper():
                 case "Y":
                     # If Yes, Saves the file

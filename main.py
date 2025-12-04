@@ -23,15 +23,21 @@ print("Welcome to the Python Morse Code Project!")
 # Which consists of the relevant function, and the arguments needed to pass
 dict_menu_func = {
     # Decode
-    "D": {"function":morse_parser.decode,"arguments":(current_morse_settings,)},
+    "D": {"function": morse_parser.decode, "arguments": (current_morse_settings,)},
     # Encode
-    "E": {"function":morse_parser.encode,"arguments":(current_morse_settings,)},
+    "E": {"function": morse_parser.encode, "arguments": (current_morse_settings,)},
     # View supported characters
-    "V": {"function":morse_parser.show_dict,"arguments":(current_morse_settings,)},
+    "V": {"function": morse_parser.show_dict, "arguments": (current_morse_settings,)},
     # Change format
-    "C": {"function":morse_format.format_change,"arguments":(current_morse_settings,)},
+    "C": {
+        "function": morse_format.format_change,
+        "arguments": (current_morse_settings,),
+    },
     # Quiz
-    "Q": {"function":morse_quiz.morse_quiz_run,"arguments":(current_morse_settings,)},
+    "Q": {
+        "function": morse_quiz.morse_quiz_run,
+        "arguments": (current_morse_settings,),
+    },
 }
 
 # Menu Loop: As long as the user doesn't exit,
@@ -43,14 +49,16 @@ while bool_loop_menu:
     # Prompt and display choices
     # for the user to choose,
     # The result will be converted to upper case
-    menu_main_choice = input("Would you like to?: \n"
-                             "- (E)ncode\n"
-                             "- (D)ecode\n"
-                             "- (Q)uiz\n"
-                             "- (V)iew supported characters\n"
-                             "- (C)hange format\n"
-                             "- e(X)it"
-                             "\n").upper()
+    menu_main_choice = input(
+        "Would you like to?: \n"
+        "- (E)ncode\n"
+        "- (D)ecode\n"
+        "- (Q)uiz\n"
+        "- (V)iew supported characters\n"
+        "- (C)hange format\n"
+        "- e(X)it"
+        "\n"
+    ).upper()
 
     # Exit the program
     if menu_main_choice == "X":

@@ -1,10 +1,12 @@
 from Modules.morse_dict import MorseDict
 
+
 class MorseQuizAssist:
-    def __init__(self,difficulty,level_dict):
+    def __init__(self, difficulty, level_dict):
         morse_dict = MorseDict()
-        self.m_quiz = morse_dict.MorseInit(f"Data/Quiz/"
-                                           f"{list(level_dict.values())[difficulty - 1]}")
+        self.m_quiz = morse_dict.MorseInit(
+            f"Data/Quiz/" f"{list(level_dict.values())[difficulty - 1]}"
+        )
         self.score_max = len(self.m_quiz)
         self.score_user = 0
         self.dict_incorrect = {}
@@ -21,8 +23,9 @@ class MorseQuizAssist:
         print(f"Current Score: {self.score_user}\n")
 
     def quiz_finish(self):
-        print("Quiz Over!\n"
-              f"You got {self.score_user} out of {self.score_max} correct!")
+        print(
+            "Quiz Over!\n" f"You got {self.score_user} out of {self.score_max} correct!"
+        )
         if self.score_user == self.score_max:
             print("A perfect score! Good job!\n")
         elif self.score_user < self.score_max:

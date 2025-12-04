@@ -6,12 +6,14 @@ from Modules.morse_quiz_assist import MorseQuizAssist
 class MorseQuiz:
     def __init__(self):
         # Dictionary that stores the quiz files per difficulty name
-        self.level_dict = {'Easy': 'morse_quiz_easy.tsv',
-                           'Medium': 'morse_quiz_medium.tsv',
-                           'Hard': 'morse_quiz_hard.tsv',
-                           'Expert': 'morse_quiz_expert.tsv'}
+        self.level_dict = {
+            "Easy": "morse_quiz_easy.tsv",
+            "Medium": "morse_quiz_medium.tsv",
+            "Hard": "morse_quiz_hard.tsv",
+            "Expert": "morse_quiz_expert.tsv",
+        }
 
-    def morse_quiz_run(self,current_morse_settings):
+    def morse_quiz_run(self, current_morse_settings):
         # Runs the quiz program
         bool_loop_diff = True
         while bool_loop_diff:
@@ -45,13 +47,11 @@ class MorseQuiz:
         bool_loop_style = True
         while bool_loop_style:
             # Quiz style selection
-            quiz_style= input("Choose answer format:\n"
-                              "(1) Options\n"
-                              "(2) Input\n")
+            quiz_style = input("Choose answer format:\n" "(1) Options\n" "(2) Input\n")
             match quiz_style:
                 # Options Style
                 case "1":
-                    quiz_options(self,difficulty,current_morse_settings)
+                    quiz_options(self, difficulty, current_morse_settings)
                     bool_loop_style = False
                 # Input Style
                 case "2":
@@ -61,17 +61,20 @@ class MorseQuiz:
                 case _:
                     print("Invalid input, Try again.")
 
-def quiz_options(self,difficulty,current_morse_settings):
+
+def quiz_options(self, difficulty, current_morse_settings):
     # Initiates the quiz assist module,
     # which facilitates common quiz functions.
-    quiz_assist = MorseQuizAssist(difficulty,self.level_dict)
+    quiz_assist = MorseQuizAssist(difficulty, self.level_dict)
     # Randomly pick a question and answer
     # from the selected difficulty dictionary
-    for answer, question in random.sample(list(quiz_assist.m_quiz.items()),
-                                          quiz_assist.score_max):
+    for answer, question in random.sample(
+        list(quiz_assist.m_quiz.items()), quiz_assist.score_max
+    ):
         # Loads 4 random answers to the guesses
-        options_list = [item[0] for item
-                        in random.sample(list(quiz_assist.m_quiz.items()),4)]
+        options_list = [
+            item[0] for item in random.sample(list(quiz_assist.m_quiz.items()), 4)
+        ]
         # If none of the 4 answers loaded
         # relates to the current question,
         # Then replace the first guess with
@@ -85,10 +88,14 @@ def quiz_options(self,difficulty,current_morse_settings):
         while bool_loop_question:
             # Converts morse question into the current format
             # and displays to the user
-            question = question.translate(str.maketrans(".-/",
-                                                        f"{current_morse_settings["dot"]}"
-                                                        f"{current_morse_settings["dash"]}"
-                                                        f"{current_morse_settings["space"]}"))
+            question = question.translate(
+                str.maketrans(
+                    ".-/",
+                    f"{current_morse_settings["dot"]}"
+                    f"{current_morse_settings["dash"]}"
+                    f"{current_morse_settings["space"]}",
+                )
+            )
             print(question)
 
             # Since ranges are 0-index,
@@ -115,7 +122,7 @@ def quiz_options(self,difficulty,current_morse_settings):
                 # Check if the input is in range
                 if 1 <= user_guess <= len(options_list):
                     # If the option was the correct answer
-                    if options_list[user_guess-1] == answer:
+                    if options_list[user_guess - 1] == answer:
                         # Then the user is rewarded a point
                         quiz_assist.correct(answer)
                         bool_loop_question = False
@@ -123,7 +130,7 @@ def quiz_options(self,difficulty,current_morse_settings):
                     else:
                         # Then the user will be shown the correct answer
                         # and the error is added to a list of wrong answers
-                        quiz_assist.incorrect(answer,question)
+                        quiz_assist.incorrect(answer, question)
                         bool_loop_question = False
             # If the input was invalid, restart the current loop
             print("Incorrect input, Please try again:")
@@ -140,26 +147,32 @@ def quiz_options(self,difficulty,current_morse_settings):
 def quiz_input(self, difficulty, current_morse_settings):
     # Initiates the quiz assist module,
     # which facilitates common quiz functions.
-    quiz_assist = MorseQuizAssist(difficulty,self.level_dict)
+    quiz_assist = MorseQuizAssist(difficulty, self.level_dict)
     # Randomly pick a question and answer
     # from the selected difficulty dictionary
     for answer, question in random.sample(
-            list(quiz_assist.m_quiz.items()),
-            quiz_assist.score_max):
+        list(quiz_assist.m_quiz.items()), quiz_assist.score_max
+    ):
         # Question Loop
         bool_loop_question = True
         while bool_loop_question:
             # Converts morse question into the current format
             # and displays to the user
-            question = question.translate(str.maketrans(".-/",
-                                          f"{current_morse_settings["dot"]}"
-                                          f"{current_morse_settings["dash"]}"
-                                          f"{current_morse_settings["space"]}"))
+            question = question.translate(
+                str.maketrans(
+                    ".-/",
+                    f"{current_morse_settings["dot"]}"
+                    f"{current_morse_settings["dash"]}"
+                    f"{current_morse_settings["space"]}",
+                )
+            )
             # Prompt the user for decoding input
-            user_guess = input(f"Decode the following Morse Code\n"
-                           f"(Letters, Numbers and Spaces only):\n"
-                           f"{question}\n"
-                           f"Enter (exit) to exit.\n").lower()
+            user_guess = input(
+                f"Decode the following Morse Code\n"
+                f"(Letters, Numbers and Spaces only):\n"
+                f"{question}\n"
+                f"Enter (exit) to exit.\n"
+            ).lower()
             # Potential list of invalid characters.
             error_chars = []
             # For each character in input
@@ -176,9 +189,11 @@ def quiz_input(self, difficulty, current_morse_settings):
             # If there was one or more invalid characters,
             # Then show the user these characters and repeat the loop
             else:
-                print(f"The following character/s are invalid:\n"
-                      f"{set(error_chars)}\n"
-                      f"Try again.")
+                print(
+                    f"The following character/s are invalid:\n"
+                    f"{set(error_chars)}\n"
+                    f"Try again."
+                )
         # If the input was the correct answer
         if user_guess == answer:
             # Then the user is rewarded a point
