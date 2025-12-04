@@ -101,7 +101,7 @@ def quiz_options(self,difficulty,current_morse_settings):
             for key in options_list:
                 print(f"({i}) {key}")
                 i += 1
-            print(f"Enter (exit) to exit.\n")
+            print("Enter (exit) to exit.\n")
             # Prompt the user for option selection
             user_guess = input("Please select an answer:\n")
             # if the input is "exit" then quit the quiz.
